@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>NOVA | لوحة التحكم</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma,Arial,sans-serif}
+body{background:#070711;color:#fff;min-height:100vh}
+button,input,select,textarea{font-family:inherit}button{cursor:pointer}
+header{position:sticky;top:0;z-index:1000;height:75px;display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:rgba(7,7,17,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08)}
+.logo{font-size:26px;font-weight:bold;background:linear-gradient(90deg,#7c3cff,#00d4ff,#ff36c8);-webkit-background-clip:text;color:transparent}
+.header-actions{display:flex;gap:10px}.icon-btn{border:1px solid rgba(255,255,255,.1);background:#11111d;color:white;width:43px;height:43px;border-radius:13px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.admin-layout{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 75px)}
+.sidebar{background:#0c0c16;border-left:1px solid rgba(255,255,255,.08);padding:25px 15px}
+.sidebar h3{padding:15px;margin-bottom:15px}
+.sidebar button{width:100%;text-align:right;padding:15px;margin-bottom:7px;background:none;border:0;color:#aaa;border-radius:12px;font-size:14px}
+.sidebar button:hover,.sidebar button.active{background:linear-gradient(90deg,rgba(124,60,255,.25),rgba(0,212,255,.08));color:#fff}
+.admin-content{padding:35px}.admin-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:15px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:35px}
+.stat{padding:25px;border-radius:20px;background:#11111d;border:1px solid rgba(255,255,255,.07)}
+.stat small{color:#888}.stat strong{display:block;font-size:30px;margin-top:10px}
+.form-box{background:#11111d;padding:30px;border-radius:22px;border:1px solid rgba(255,255,255,.08);margin-bottom:30px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.form-group{display:flex;flex-direction:column;gap:8px}.form-group.full{grid-column:1/-1}
+.form-group label{color:#bbb}
+.form-group input,.form-group select,.form-group textarea{background:#080810;border:1px solid #29293b;color:white;padding:14px;border-radius:11px;outline:none}
+.form-group textarea{min-height:120px;resize:vertical}
+.image-upload{border:2px dashed #33334a;border-radius:15px;padding:25px;text-align:center;transition:.3s;cursor:pointer}
+.image-upload:hover{border-color:#7c3cff;background:rgba(124,60,255,.05)}
+.image-upload img{max-width:100%;max-height:200px;border-radius:12px;margin-top:15px}
+.upload-btns{display:flex;gap:10px;justify-content:center;margin-top:15px;flex-wrap:wrap}
+.upload-btns button{padding:10px 20px;border-radius:10px;border:1px solid #33334a;background:#1c1c2c;color:#fff}
+.table-box{overflow:auto;background:#11111d;border-radius:20px;border:1px solid rgba(255,255,255,.08)}
+table{width:100%;border-collapse:collapse}th,td{padding:17px;text-align:right;border-bottom:1px solid rgba(255,255,255,.06)}
+th{color:#aaa;font-size:14px}td{color:#ddd}td img{width:50px;height:50px;object-fit:cover;border-radius:8px}
+.small-btn{border:0;padding:8px 12px;border-radius:8px;color:white;margin-left:5px;font-size:13px}
+.edit{background:#155eef}.delete{background:#d92d20}
+.primary{border:0;padding:15px 30px;border-radius:14px;color:white;font-weight:bold;background:linear-gradient(90deg,#7c3cff,#00aaff)}
+.secondary{padding:15px 30px;border-radius:14px;color:white;border:1px solid #33334a;background:#11111d}
+.empty{color:#888;text-align:center;padding:40px}
+@media(max-width:900px){.admin-layout{grid-template-columns:1fr}.sidebar{display:none}.sidebar.mobile-open{display:block;position:fixed;top:75px;right:0;width:250px;height:calc(100vh - 75px);z-index:2000;overflow-y:auto}.stats{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.stats{grid-template-columns:1fr}.admin-content{padding:20px}}
+</style>
+</head>
+<body>
+<header><div class="logo">⚡ NOVA ADMIN</div><div class="header-actions"><button class="icon-btn" onclick="toggleSidebar()">☰</button><a href="index.html" class="icon-btn" title="الموقع">🏠</a></div></header>
+<div class="admin-layout">
+  <aside class="sidebar" id="sidebar">
+    <h3>⚡ NOVA ADMIN</h3>
+    <button class="tab-btn active" data-tab="dashboard" onclick="showTab('dashboard',this)">📊 لوحة المعلومات</button>
+    <button class="tab-btn" data-tab="add" onclick="showTab('add',this)">➕ إضافة منتج</button>
+    <button class="tab-btn" data-tab="products" onclick="showTab('products',this)">📦 المنتجات</button>
+    <button class="tab-btn" data-tab="orders" onclick="showTab('orders',this)">🛒 الطلبات</button>
+    <button class="tab-btn" data-tab="customers" onclick="showTab('customers',this)">👥 العملاء</button>
+    <button class="tab-btn" data-tab="sales" onclick="showTab('sales',this)">💰 المبيعات</button>
+    <a href="index.html" style="display:block;text-decoration:none;color:#aaa;padding:15px;margin-top:15px;border-radius:12px">🏠 العودة للموقع</a>
+  </aside>
+  <section class="admin-content">
+    <div id="tab-dashboard" class="tab-content">
+      <div class="admin-title"><div><h1>لوحة المعلومات</h1><p style="color:#888;margin-top:8px">نظرة عامة على المتجر</p></div><button class="primary" onclick="showTab('add', document.querySelector('[data-tab=add]'))">+ إضافة منتج</button></div>
+      <div class="stats">
+        <div class="stat"><small>إجمالي المنتجات</small><strong id="productCount">0</strong></div>
+        <div class="stat"><small>الطلبات</small><strong id="ordersCount">0</strong></div>
+        <div class="stat"><small>العملاء</small><strong id="customersCount">0</strong></div>
+        <div class="stat"><small>المبيعات</small><strong id="salesTotal">$0</strong></div>
+      </div>
+      <h2 style="margin:30px 0 20px">أحدث المنتجات</h2>
+      <div class="table-box"><table><thead><tr><th>الصورة</th><th>المنتج</th><th>التصنيف</th><th>السعر</th></tr></thead><tbody id="dashboardProducts"></tbody></table></div>
+    </div>
+    <div id="tab-add" class="tab-content" style="display:none">
+      <div class="admin-title"><div><h1 id="formTitle">➕ إضافة منتج جديد</h1></div></div>
+      <div class="form-box">
+        <div class="form-grid">
+          <div class="form-group"><label>اسم المنتج</label><input id="productName" type="text" placeholder="مثال: هاتف ذكي"></div>
+          <div class="form-group"><label>السعر</label><input id="productPrice" type="number" placeholder="500"></div>
+          <div class="form-group"><label>التصنيف</label><select id="productCategory"><option>إلكترونيات</option><option>هواتف</option><option>لابتوبات</option><option>إكسسوارات</option><option>ملابس</option><option>أخرى</option></select></div>
+          <div class="form-group"><label>الكمية المتوفرة</label><input id="productStock" type="number" placeholder="10" value="10"></div>
+          <div class="form-group full">
+            <label>صورة المنتج</label>
+            <div class="image-upload" id="uploadBox">
+              <p style="color:#888">📷 اختر صورة من الكاميرا أو المعرض</p>
+              <input type="file" id="imageInput" accept="image/*" style="display:none">
+              <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none">
+              <div class="upload-btns">
+                <button type="button" onclick="document.getElementById('imageInput').click()">🖼️ من المعرض</button>
+                <button type="button" onclick="document.getElementById('cameraInput').click()">📷 من الكاميرا</button>
+                <button type="button" onclick="clearImage()">🗑️ حذف الصورة</button>
+              </div>
+              <img id="previewImage" style="display:none">
+            </div>
+          </div>
+          <div class="form-group full"><label>وصف المنتج</label><textarea id="productDescription" placeholder="اكتب وصف المنتج هنا"></textarea></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:20px"><button class="primary" onclick="saveProduct()" id="saveBtn">💾 حفظ المنتج</button><button class="secondary" onclick="resetForm()">إلغاء</button></div>
+      </div>
+    </div>
+    <div id="tab-products" class="tab-content" style="display:none">
+      <div class="admin-title"><div><h1>📦 إدارة المنتجات</h1></div></div>
+      <div class="table-box"><table><thead><tr><th>الصورة</th><th>المنتج</th><th>التصنيف</th><th>السعر</th><th>الكمية</th><th>الإجراءات</th></tr></thead><tbody id="adminProducts"></tbody></table></div>
+    </div>
+    <div id="tab-orders" class="tab-content" style="display:none">
+      <div class="admin-title"><div><h1>🛒 الطلبات</h1></div></div>
+      <div class="table-box"><table><thead><tr><th>رقم الطلب</th><th>العميل</th><th>الهاتف</th><th>الإجمالي</th><th>التاريخ</th><th>الحالة</th></tr></thead><tbody id="adminOrders"></tbody></table></div>
+    </div>
+    <div id="tab-customers" class="tab-content" style="display:none">
+      <div class="admin-title"><div><h1>👥 العملاء</h1></div></div>
+      <div class="table-box"><table><thead><tr><th>#</th><th>الاسم</th><th>الهاتف</th><th>العنوان</th><th>التاريخ</th></tr></thead><tbody id="adminCustomers"></tbody></table></div>
+    </div>
+    <div id="tab-sales" class="tab-content" style="display:none">
+      <div class="admin-title"><div><h1>💰 المبيعات</h1></div></div>
+      <div class="stats">
+        <div class="stat"><small>إجمالي المبيعات</small><strong id="salesTotal2">$0</strong></div>
+        <div class="stat"><small>عدد الطلبات</small><strong id="ordersCount2">0</strong></div>
+        <div class="stat"><small>متوسط الطلب</small><strong id="avgOrder">$0</strong></div>
+      </div>
+    </div>
+  </section>
+</div>
+<script type="module">
+import { addProductDB, updateProductDB, deleteProductDB, fetchProductsRealtime, fetchOrdersRealtime, fetchCustomersRealtime } from "./data.js";
+let products = []; let orders = []; let customers = []; let editingId = null; let uploadedImageData = "";
+fetchProductsRealtime((list) => { products = list; renderDashboard(); renderProducts(); });
+fetchOrdersRealtime((list) => { orders = list; renderDashboard(); renderOrders(); renderSales(); });
+fetchCustomersRealtime((list) => { customers = list; renderDashboard(); renderCustomers(); });
+window.showTab = function(name, btn) {
+  document.querySelectorAll(".tab-content").forEach(el => el.style.display = "none");
+  const el = document.getElementById("tab-" + name); if (el) el.style.display = "block";
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  if (btn) btn.classList.add("active");
+  document.getElementById("sidebar").classList.remove("mobile-open");
+  if (name === "add" && !editingId) resetForm();
+};
+window.toggleSidebar = function() { document.getElementById("sidebar").classList.toggle("mobile-open"); };
+function renderDashboard() {
+  document.getElementById("productCount").textContent = products.length;
+  document.getElementById("ordersCount").textContent = orders.length;
+  document.getElementById("customersCount").textContent = customers.length;
+  const total = orders.reduce((s, o) => s + (Number(o.total) || 0), 0);
+  document.getElementById("salesTotal").textContent = "$" + total;
+  const tb = document.getElementById("dashboardProducts");
+  tb.innerHTML = products.slice(0, 5).map(p => `<tr><td><img src="${p.image}"></td><td>${p.name}</td><td>${p.category}</td><td>$${p.price}</td></tr>`).join("") || `<tr><td colspan="4" class="empty">لا توجد منتجات</td></tr>`;
+}
+function renderProducts() {
+  const tb = document.getElementById("adminProducts");
+  tb.innerHTML = products.map(p => `<tr><td><img src="${p.image}"></td><td>${p.name}</td><td>${p.category}</td><td>$${p.price}</td><td>${p.stock ?? "-"}</td><td><button class="small-btn edit" onclick="editProduct('${p.id}')">تعديل</button><button class="small-btn delete" onclick="deleteProduct('${p.id}')">حذف</button></td></tr>`).join("") || `<tr><td colspan="6" class="empty">لا توجد منتجات</td></tr>`;
+}
+document.getElementById("imageInput").addEventListener("change", handleImage);
+document.getElementById("cameraInput").addEventListener("change", handleImage);
+function handleImage(e) { const file = e.target.files[0]; if (!file) return; const reader = new FileReader(); reader.onload = ev => { uploadedImageData = ev.target.result; const img = document.getElementById("previewImage"); img.src = uploadedImageData; img.style.display = "block"; }; reader.readAsDataURL(file); }
+window.clearImage = function() { uploadedImageData = ""; document.getElementById("previewImage").style.display = "none"; document.getElementById("imageInput").value = ""; document.getElementById("cameraInput").value = ""; };
+window.saveProduct = async function() {
+  const name = document.getElementById("productName").value.trim();
+  const price = document.getElementById("productPrice").value;
+  const category = document.getElementById("productCategory").value;
+  const stock = document.getElementById("productStock").value;
+  const description = document.getElementById("productDescription").value.trim();
+  if (!name || !price) return alert("اكتب اسم المنتج والسعر");
+  const image = uploadedImageData || "https://via.placeholder.com/600x400?text=NOVA";
+  const data = { name, price: Number(price), category, stock: Number(stock) || 0, image, description };
+  try {
+    const btn = document.getElementById("saveBtn"); btn.textContent = "⏳ جاري الحفظ..."; btn.disabled = true;
+    if (editingId) { const old = products.find(x => x.id === editingId); if (!uploadedImageData && old) data.image = old.image; await updateProductDB(editingId, data); alert("✅ تم تعديل المنتج"); } else { await addProductDB(data); alert("✅ تمت إضافة المنتج"); }
+    editingId = null; resetForm(); showTab("products", document.querySelector('[data-tab=products]'));
+  } catch (e) { alert("❌ حدث خطأ"); } finally { const btn = document.getElementById("saveBtn"); btn.disabled = false; btn.textContent = editingId ? "💾 حفظ التعديلات" : "💾 حفظ المنتج"; }
+};
+window.editProduct = function(id) { const p = products.find(x => x.id === id); if (!p) return; editingId = id; document.getElementById("productName").value = p.name; document.getElementById("productPrice").value = p.price; document.getElementById("productCategory").value = p.category; document.getElementById("productStock").value = p.stock ?? 10; document.getElementById("productDescription").value = p.description || ""; uploadedImageData = ""; const img = document.getElementById("previewImage"); if (p.image) { img.src = p.image; img.style.display = "block"; } document.getElementById("formTitle").textContent = "✏️ تعديل المنتج"; document.getElementById("saveBtn").textContent = "💾 حفظ التعديلات"; showTab("add", document.querySelector('[data-tab=add]')); };
+window.deleteProduct = async function(id) { if (!confirm("هل تريد حذف هذا المنتج؟")) return; try { await deleteProductDB(id); alert("✅ تم الحذف"); } catch (e) { alert("❌ فشل الحذف"); } };
+window.resetForm = function() { editingId = null; uploadedImageData = ""; document.getElementById("productName").value = ""; document.getElementById("productPrice").value = ""; document.getElementById("productStock").value = "10"; document.getElementById("productDescription").value = ""; document.getElementById("previewImage").style.display = "none"; document.getElementById("imageInput").value = ""; document.getElementById("cameraInput").value = ""; document.getElementById("formTitle").textContent = "➕ إضافة منتج جديد"; document.getElementById("saveBtn").textContent = "💾 حفظ المنتج"; };
+function renderOrders() { const tb = document.getElementById("adminOrders"); tb.innerHTML = orders.map(o => `<tr><td>#${String(o.id).slice(-6)}</td><td>${o.customer?.name || "-"}</td><td>${o.customer?.phone || "-"}</td><td>$${o.total || 0}</td><td>${new Date(o.date || o.createdAt).toLocaleDateString("ar")}</td><td><span style="color:#00d4ff">${o.status || "جديد"}</span></td></tr>`).join("") || `<tr><td colspan="6" class="empty">لا توجد طلبات</td></tr>`; }
+function renderCustomers() { const tb = document.getElementById("adminCustomers"); tb.innerHTML = customers.map((c, i) => `<tr><td>${i + 1}</td><td>${c.name}</td><td>${c.phone}</td><td>${c.address || "-"}</td><td>${new Date(c.date || c.createdAt).toLocaleDateString("ar")}</td></tr>`).join("") || `<tr><td colspan="5" class="empty">لا يوجد عملاء</td></tr>`; }
+function renderSales() { const total = orders.reduce((s, o) => s + (Number(o.total) || 0), 0); document.getElementById("salesTotal2").textContent = "$" + total; document.getElementById("ordersCount2").textContent = orders.length; document.getElementById("avgOrder").textContent = orders.length ? "$" + Math.round(total / orders.length) : "$0"; }
+</script>
+</body>
+</html>
