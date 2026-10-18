@@ -1,0 +1,19 @@
+{
+  "name": "متجر NOVA",
+  "short_name": "NOVA",
+  "description": "متجر NOVA الإلكتروني",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#070711",
+  "theme_color": "#7c3cff",
+  "dir": "rtl",
+  "lang": "ar",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3081/3081559.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
