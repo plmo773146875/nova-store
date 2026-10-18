@@ -1,51 +1,98 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>NOVA | لوحة التحكم</title>
 <style>
+:root {
+  --bg-color: #070711;
+  --text-color: #ffffff;
+  --text-muted: #aaaaaa;
+  --card-bg: #11111d;
+  --sidebar-bg: #0c0c16;
+  --border-color: rgba(255,255,255,0.08);
+  --input-bg: #080810;
+  --input-border: #29293b;
+  --header-bg: rgba(7,7,17,.85);
+}
+[data-theme="light"] {
+  --bg-color: #f4f6f9;
+  --text-color: #333333;
+  --text-muted: #666666;
+  --card-bg: #ffffff;
+  --sidebar-bg: #e9ecef;
+  --border-color: rgba(0,0,0,0.1);
+  --input-bg: #ffffff;
+  --input-border: #ced4da;
+  --header-bg: rgba(255,255,255,.85);
+}
 *{box-sizing:border-box;margin:0;padding:0;font-family:Tahoma,Arial,sans-serif}
-body{background:#070711;color:#fff;min-height:100vh}
+body{background:var(--bg-color);color:var(--text-color);min-height:100vh;transition:0.3s}
 button,input,select,textarea{font-family:inherit}button{cursor:pointer}
-header{position:sticky;top:0;z-index:1000;height:75px;display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:rgba(7,7,17,.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.08)}
+header{position:sticky;top:0;z-index:1000;height:75px;display:flex;align-items:center;justify-content:space-between;padding:0 30px;background:var(--header-bg);backdrop-filter:blur(20px);border-bottom:1px solid var(--border-color)}
 .logo{font-size:26px;font-weight:bold;background:linear-gradient(90deg,#7c3cff,#00d4ff,#ff36c8);-webkit-background-clip:text;color:transparent}
-.header-actions{display:flex;gap:10px}.icon-btn{border:1px solid rgba(255,255,255,.1);background:#11111d;color:white;width:43px;height:43px;border-radius:13px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
+.header-actions{display:flex;gap:10px}.icon-btn{border:1px solid var(--border-color);background:var(--card-bg);color:var(--text-color);width:43px;height:43px;border-radius:13px;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;font-size:18px}
 .admin-layout{display:grid;grid-template-columns:250px 1fr;min-height:calc(100vh - 75px)}
-.sidebar{background:#0c0c16;border-left:1px solid rgba(255,255,255,.08);padding:25px 15px}
+.sidebar{background:var(--sidebar-bg);border-left:1px solid var(--border-color);padding:25px 15px}
 .sidebar h3{padding:15px;margin-bottom:15px}
-.sidebar button{width:100%;text-align:right;padding:15px;margin-bottom:7px;background:none;border:0;color:#aaa;border-radius:12px;font-size:14px}
-.sidebar button:hover,.sidebar button.active{background:linear-gradient(90deg,rgba(124,60,255,.25),rgba(0,212,255,.08));color:#fff}
-.admin-content{padding:35px}.admin-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:15px}
+.sidebar button{width:100%;text-align:right;padding:15px;margin-bottom:7px;background:none;border:0;color:var(--text-muted);border-radius:12px;font-size:14px}
+.sidebar button:hover,.sidebar button.active{background:linear-gradient(90deg,rgba(124,60,255,.25),rgba(0,212,255,.08));color:var(--text-color)}
+.admin-content{padding:35px}
+.admin-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:30px;flex-wrap:wrap;gap:15px}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:35px}
-.stat{padding:25px;border-radius:20px;background:#11111d;border:1px solid rgba(255,255,255,.07)}
-.stat small{color:#888}.stat strong{display:block;font-size:30px;margin-top:10px}
-.form-box{background:#11111d;padding:30px;border-radius:22px;border:1px solid rgba(255,255,255,.08);margin-bottom:30px}
+.stat{padding:25px;border-radius:20px;background:var(--card-bg);border:1px solid var(--border-color);transition:0.3s}
+.stat small{color:var(--text-muted)}.stat strong{display:block;font-size:30px;margin-top:10px}
+.form-box{background:var(--card-bg);padding:30px;border-radius:22px;border:1px solid var(--border-color);margin-bottom:30px;transition:0.3s}
 .form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
 .form-group{display:flex;flex-direction:column;gap:8px}.form-group.full{grid-column:1/-1}
-.form-group label{color:#bbb}
-.form-group input,.form-group select,.form-group textarea{background:#080810;border:1px solid #29293b;color:white;padding:14px;border-radius:11px;outline:none}
+.form-group label{color:var(--text-muted)}
+.form-group input,.form-group select,.form-group textarea{background:var(--input-bg);border:1px solid var(--input-border);color:var(--text-color);padding:14px;border-radius:11px;outline:none;transition:0.3s}
 .form-group textarea{min-height:120px;resize:vertical}
-.image-upload{border:2px dashed #33334a;border-radius:15px;padding:25px;text-align:center;transition:.3s;cursor:pointer}
+.image-upload{border:2px dashed var(--input-border);border-radius:15px;padding:25px;text-align:center;transition:.3s;cursor:pointer}
 .image-upload:hover{border-color:#7c3cff;background:rgba(124,60,255,.05)}
 .image-upload img{max-width:100%;max-height:200px;border-radius:12px;margin-top:15px}
 .upload-btns{display:flex;gap:10px;justify-content:center;margin-top:15px;flex-wrap:wrap}
-.upload-btns button{padding:10px 20px;border-radius:10px;border:1px solid #33334a;background:#1c1c2c;color:#fff}
-.table-box{overflow:auto;background:#11111d;border-radius:20px;border:1px solid rgba(255,255,255,.08)}
-table{width:100%;border-collapse:collapse}th,td{padding:17px;text-align:right;border-bottom:1px solid rgba(255,255,255,.06)}
-th{color:#aaa;font-size:14px}td{color:#ddd}td img{width:50px;height:50px;object-fit:cover;border-radius:8px}
+.upload-btns button{padding:10px 20px;border-radius:10px;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-color)}
+.table-box{overflow:auto;background:var(--card-bg);border-radius:20px;border:1px solid var(--border-color);transition:0.3s}
+table{width:100%;border-collapse:collapse}th,td{padding:17px;text-align:right;border-bottom:1px solid var(--border-color)}
+th{color:var(--text-muted);font-size:14px}td{color:var(--text-color)}td img{width:50px;height:50px;object-fit:cover;border-radius:8px}
 .small-btn{border:0;padding:8px 12px;border-radius:8px;color:white;margin-left:5px;font-size:13px}
 .edit{background:#155eef}.delete{background:#d92d20}
 .primary{border:0;padding:15px 30px;border-radius:14px;color:white;font-weight:bold;background:linear-gradient(90deg,#7c3cff,#00aaff)}
-.secondary{padding:15px 30px;border-radius:14px;color:white;border:1px solid #33334a;background:#11111d}
-.empty{color:#888;text-align:center;padding:40px}
+.secondary{padding:15px 30px;border-radius:14px;color:var(--text-color);border:1px solid var(--border-color);background:var(--card-bg)}
+.empty{color:var(--text-muted);text-align:center;padding:40px}
+footer{margin-top:50px;padding:30px;text-align:center;border-top:1px solid var(--border-color);color:var(--text-muted)}
+footer p{margin-bottom:5px}footer strong{color:var(--text-color)}
 @media(max-width:900px){.admin-layout{grid-template-columns:1fr}.sidebar{display:none}.sidebar.mobile-open{display:block;position:fixed;top:75px;right:0;width:250px;height:calc(100vh - 75px);z-index:2000;overflow-y:auto}.stats{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}}
 @media(max-width:600px){.stats{grid-template-columns:1fr}.admin-content{padding:20px}}
 </style>
 </head>
 <body>
-<header><div class="logo">⚡ NOVA ADMIN</div><div class="header-actions"><button class="icon-btn" onclick="toggleSidebar()">☰</button><a href="index.html" class="icon-btn" title="الموقع">🏠</a></div></header>
+<script>
+  let pass = prompt("🔒 لوحة الإدارة محمية. يرجى إدخال كلمة المرور:");
+  if (pass !== "123456789") {
+    alert("كلمة المرور خاطئة! سيتم توجيهك إلى المتجر.");
+    window.location.href = "index.html";
+  }
+  const savedTheme = localStorage.getItem('theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', savedTheme);
+  function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  }
+</script>
+<header>
+  <div class="logo">⚡ NOVA ADMIN</div>
+  <div class="header-actions">
+    <button class="icon-btn" onclick="toggleTheme()" title="تغيير المظهر">🌓</button>
+    <button class="icon-btn" onclick="toggleSidebar()">☰</button>
+    <a href="index.html" class="icon-btn" title="الموقع">🏠</a>
+  </div>
+</header>
 <div class="admin-layout">
   <aside class="sidebar" id="sidebar">
     <h3>⚡ NOVA ADMIN</h3>
@@ -55,11 +102,11 @@ th{color:#aaa;font-size:14px}td{color:#ddd}td img{width:50px;height:50px;object-
     <button class="tab-btn" data-tab="orders" onclick="showTab('orders',this)">🛒 الطلبات</button>
     <button class="tab-btn" data-tab="customers" onclick="showTab('customers',this)">👥 العملاء</button>
     <button class="tab-btn" data-tab="sales" onclick="showTab('sales',this)">💰 المبيعات</button>
-    <a href="index.html" style="display:block;text-decoration:none;color:#aaa;padding:15px;margin-top:15px;border-radius:12px">🏠 العودة للموقع</a>
+    <a href="index.html" style="display:block;text-decoration:none;color:var(--text-muted);padding:15px;margin-top:15px;border-radius:12px">🏠 العودة للموقع</a>
   </aside>
   <section class="admin-content">
     <div id="tab-dashboard" class="tab-content">
-      <div class="admin-title"><div><h1>لوحة المعلومات</h1><p style="color:#888;margin-top:8px">نظرة عامة على المتجر</p></div><button class="primary" onclick="showTab('add', document.querySelector('[data-tab=add]'))">+ إضافة منتج</button></div>
+      <div class="admin-title"><div><h1>لوحة المعلومات</h1><p style="color:var(--text-muted);margin-top:8px">نظرة عامة على المتجر</p></div><button class="primary" onclick="showTab('add', document.querySelector('[data-tab=add]'))">+ إضافة منتج</button></div>
       <div class="stats">
         <div class="stat"><small>إجمالي المنتجات</small><strong id="productCount">0</strong></div>
         <div class="stat"><small>الطلبات</small><strong id="ordersCount">0</strong></div>
@@ -78,9 +125,9 @@ th{color:#aaa;font-size:14px}td{color:#ddd}td img{width:50px;height:50px;object-
           <div class="form-group"><label>التصنيف</label><select id="productCategory"><option>إلكترونيات</option><option>هواتف</option><option>لابتوبات</option><option>إكسسوارات</option><option>ملابس</option><option>أخرى</option></select></div>
           <div class="form-group"><label>الكمية المتوفرة</label><input id="productStock" type="number" placeholder="10" value="10"></div>
           <div class="form-group full">
-            <label>صورة المنتج</label>
+            <label>صورة المنتج (اتركها فارغة إذا لم تعمل)</label>
             <div class="image-upload" id="uploadBox">
-              <p style="color:#888">📷 اختر صورة من الكاميرا أو المعرض</p>
+              <p style="color:var(--text-muted)">📷 اختر صورة من الكاميرا أو المعرض</p>
               <input type="file" id="imageInput" accept="image/*" style="display:none">
               <input type="file" id="cameraInput" accept="image/*" capture="environment" style="display:none">
               <div class="upload-btns">
@@ -116,6 +163,11 @@ th{color:#aaa;font-size:14px}td{color:#ddd}td img{width:50px;height:50px;object-
         <div class="stat"><small>متوسط الطلب</small><strong id="avgOrder">$0</strong></div>
       </div>
     </div>
+    <footer>
+      <p><strong>NOVA STORE</strong> - نظام إدارة المتجر الإلكتروني</p>
+      <p>تم التطوير بواسطة: إبراهيم المبرزي | مشروع التخرج</p>
+      <p style="font-size:12px; margin-top:10px;">الإصدار 1.0.0 © 2024</p>
+    </footer>
   </section>
 </div>
 <script type="module">
@@ -163,7 +215,7 @@ window.saveProduct = async function() {
     const btn = document.getElementById("saveBtn"); btn.textContent = "⏳ جاري الحفظ..."; btn.disabled = true;
     if (editingId) { const old = products.find(x => x.id === editingId); if (!uploadedImageData && old) data.image = old.image; await updateProductDB(editingId, data); alert("✅ تم تعديل المنتج"); } else { await addProductDB(data); alert("✅ تمت إضافة المنتج"); }
     editingId = null; resetForm(); showTab("products", document.querySelector('[data-tab=products]'));
-  } catch (e) { alert("❌ حدث خطأ"); } finally { const btn = document.getElementById("saveBtn"); btn.disabled = false; btn.textContent = editingId ? "💾 حفظ التعديلات" : "💾 حفظ المنتج"; }
+  } catch (e) { alert("❌ حدث خطأ: " + e.message); } finally { const btn = document.getElementById("saveBtn"); btn.disabled = false; btn.textContent = editingId ? "💾 حفظ التعديلات" : "💾 حفظ المنتج"; }
 };
 window.editProduct = function(id) { const p = products.find(x => x.id === id); if (!p) return; editingId = id; document.getElementById("productName").value = p.name; document.getElementById("productPrice").value = p.price; document.getElementById("productCategory").value = p.category; document.getElementById("productStock").value = p.stock ?? 10; document.getElementById("productDescription").value = p.description || ""; uploadedImageData = ""; const img = document.getElementById("previewImage"); if (p.image) { img.src = p.image; img.style.display = "block"; } document.getElementById("formTitle").textContent = "✏️ تعديل المنتج"; document.getElementById("saveBtn").textContent = "💾 حفظ التعديلات"; showTab("add", document.querySelector('[data-tab=add]')); };
 window.deleteProduct = async function(id) { if (!confirm("هل تريد حذف هذا المنتج؟")) return; try { await deleteProductDB(id); alert("✅ تم الحذف"); } catch (e) { alert("❌ فشل الحذف"); } };
