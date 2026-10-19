@@ -1,6 +1,6 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
 
-// رابط ومفتاح مشروع NOVA Store الخاص بك
+// رابط ومفتاح مشروع NOVA Store الصحيح
 const SUPABASE_URL = 'https://lhuxgbgokhusvknrrmj.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxodXhnYmdva2h1c3Zrbm5ydm1qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIzMzEyOTAsImV4cCI6MjEwNzkwNzI5MH0.Pv5DeFzR7tzsI42Jnt-Gboq-aqMvjapSYQ6o3r-U3jU';
 
